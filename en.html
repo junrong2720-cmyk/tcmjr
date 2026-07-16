@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TCM Constitution Test · The Nine Constitutions</title>
+
+<style>
+:root {
+  --paper: #F3EEE2;
+  --ink: #2A2924;
+  --ink-soft: #6E6A5E;
+  --dai: #37585A;
+  --dai-soft: #37585A22;
+  --zhusha: #A8402F;
+  --zhusha-soft: #A8402F14;
+  --hairline: #D8D2C0;
+  --card: #FBF8F0;
+  --shadow: 0 2px 16px rgba(42, 41, 36, 0.07);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #191813;
+    --ink: #EAE4D3;
+    --ink-soft: #A39D8C;
+    --dai: #8FB3B0;
+    --dai-soft: #8FB3B026;
+    --zhusha: #CE6950;
+    --zhusha-soft: #CE695020;
+    --hairline: #33312A;
+    --card: #211F19;
+    --shadow: 0 2px 16px rgba(0, 0, 0, 0.35);
+  }
+}
+:root[data-theme="light"] {
+  --paper: #F3EEE2;
+  --ink: #2A2924;
+  --ink-soft: #6E6A5E;
+  --dai: #37585A;
+  --dai-soft: #37585A22;
+  --zhusha: #A8402F;
+  --zhusha-soft: #A8402F14;
+  --hairline: #D8D2C0;
+  --card: #FBF8F0;
+  --shadow: 0 2px 16px rgba(42, 41, 36, 0.07);
+}
+:root[data-theme="dark"] {
+  --paper: #191813;
+  --ink: #EAE4D3;
+  --ink-soft: #A39D8C;
+  --dai: #8FB3B0;
+  --dai-soft: #8FB3B026;
+  --zhusha: #CE6950;
+  --zhusha-soft: #CE695020;
+  --hairline: #33312A;
+  --card: #211F19;
+  --shadow: 0 2px 16px rgba(0, 0, 0, 0.35);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  line-height: 1.65;
+}
+
+.serif {
+  font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
+}
+.zh {
+  font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", "SimSun", serif;
+}
+
+.wrap {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 0 20px 64px;
+  min-height: 100vh;
+}
+
+.screen { display: none; }
+.screen.active { display: block; }
+
+/* ---------- progress ---------- */
+#progressTrack {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  z-index: 10;
+}
+#progressBar {
+  height: 100%;
+  width: 0%;
+  background: var(--dai);
+  transition: width 0.25s ease;
+}
+
+/* ---------- cover ---------- */
+.cover {
+  padding-top: 9vh;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+.cover-head {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: 22px;
+}
+.cover-eyebrow {
+  font-size: 12px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--zhusha);
+  margin: 0 0 14px;
+}
+.cover-title {
+  font-size: 42px;
+  font-weight: 600;
+  margin: 0;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+.cover-sub {
+  margin: 14px 0 0;
+  font-size: 15px;
+  color: var(--ink-soft);
+}
+.cover-zh-col {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+.zh-strip {
+  writing-mode: vertical-rl;
+  font-size: 17px;
+  letter-spacing: 0.35em;
+  color: var(--ink-soft);
+  border-left: 1px solid var(--hairline);
+  padding-left: 12px;
+  flex: 1;
+}
+.cover-seal {
+  width: 52px;
+  height: 52px;
+  border: 2px solid var(--zhusha);
+  color: var(--zhusha);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  place-items: center;
+  font-size: 16px;
+  line-height: 1;
+  border-radius: 4px;
+  transform: rotate(-3deg);
+  padding: 4px;
+}
+.cover-note {
+  font-size: 15px;
+  color: var(--ink-soft);
+  margin: 0;
+  max-width: 34em;
+}
+.cover-note b { color: var(--ink); font-weight: 600; }
+
+.lang-link {
+  align-self: flex-start;
+  font-size: 13px;
+  color: var(--ink-soft);
+  text-decoration: none;
+  border-bottom: 1px solid var(--hairline);
+  padding-bottom: 1px;
+}
+.lang-link:hover { color: var(--dai); border-color: var(--dai); }
+
+.gender-row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.gender-label {
+  font-size: 12px;
+  color: var(--ink-soft);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.gender-btn {
+  flex: 0 0 auto;
+  padding: 8px 26px;
+  border: 1px solid var(--hairline);
+  background: var(--card);
+  color: var(--ink);
+  font-size: 15px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+.gender-btn[aria-pressed="true"] {
+  border-color: var(--dai);
+  background: var(--dai-soft);
+  color: var(--dai);
+  font-weight: 600;
+}
+.gender-hint {
+  flex-basis: 100%;
+  font-size: 12px;
+  color: var(--ink-soft);
+  margin: 0;
+}
+.gender-btn:focus-visible, .opt:focus-visible, .btn:focus-visible {
+  outline: 2px solid var(--dai);
+  outline-offset: 2px;
+}
+
+.btn {
+  display: block;
+  width: 100%;
+  padding: 16px;
+  font-size: 16px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 6px;
+  background: var(--dai);
+  color: var(--paper);
+  cursor: pointer;
+  font-weight: 600;
+}
+.btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.btn.ghost {
+  background: transparent;
+  color: var(--ink-soft);
+  border: 1px solid var(--hairline);
+  font-weight: 400;
+}
+
+/* ---------- quiz ---------- */
+.quiz { padding-top: 56px; }
+.quiz-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  color: var(--ink-soft);
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 28px;
+}
+.back-link {
+  background: none;
+  border: none;
+  color: var(--ink-soft);
+  font-size: 13px;
+  cursor: pointer;
+  padding: 4px 0;
+  letter-spacing: 0.06em;
+}
+.back-link:disabled { opacity: 0.3; cursor: not-allowed; }
+.q-text {
+  font-size: 23px;
+  font-weight: 600;
+  margin: 0 0 8px;
+  line-height: 1.45;
+  text-wrap: balance;
+  min-height: 3.4em;
+}
+.q-hint {
+  color: var(--ink-soft);
+  font-size: 13px;
+  margin: 0 0 28px;
+}
+.opts { display: flex; flex-direction: column; gap: 10px; }
+.opt {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 14px 18px;
+  font-size: 16px;
+  border: 1px solid var(--hairline);
+  border-radius: 6px;
+  background: var(--card);
+  color: var(--ink);
+  cursor: pointer;
+  transition: border-color 0.12s, background 0.12s;
+  text-align: left;
+}
+.opt small { color: var(--ink-soft); font-size: 12px; text-align: right; }
+.opt.picked {
+  border-color: var(--dai);
+  background: var(--dai-soft);
+}
+@media (hover: hover) {
+  .opt:hover { border-color: var(--dai); }
+}
+
+/* ---------- result ---------- */
+.result { padding-top: 48px; }
+.report-card {
+  background: var(--card);
+  border: 1px solid var(--hairline);
+  border-radius: 10px;
+  padding: 32px 26px 26px;
+  box-shadow: var(--shadow);
+}
+.report-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 6px;
+}
+.report-eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin: 0 0 10px;
+}
+.main-type {
+  font-size: 32px;
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.2;
+  color: var(--ink);
+}
+.main-zh {
+  margin: 6px 0 0;
+  font-size: 14px;
+  color: var(--ink-soft);
+  letter-spacing: 0.2em;
+}
+.main-level {
+  display: inline-block;
+  margin-top: 10px;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--zhusha);
+  border: 1px solid var(--zhusha);
+  border-radius: 999px;
+  padding: 2px 14px;
+}
+.seal {
+  flex: 0 0 auto;
+  width: 76px;
+  height: 76px;
+  background: var(--zhusha);
+  color: #F3EEE2;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  place-items: center;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1;
+  border-radius: 6px;
+  transform: rotate(-4deg);
+  padding: 8px;
+  box-shadow: var(--shadow);
+}
+.type-desc {
+  font-size: 15px;
+  color: var(--ink-soft);
+  margin: 18px 0 0;
+}
+.also-row {
+  margin: 14px 0 0;
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+.also-row .tag {
+  display: inline-block;
+  margin: 4px 6px 0 0;
+  padding: 1px 10px;
+  border: 1px solid var(--hairline);
+  border-radius: 999px;
+  font-size: 12px;
+  color: var(--ink);
+}
+
+.divider {
+  border: none;
+  border-top: 1px dashed var(--hairline);
+  margin: 26px 0;
+}
+
+.chart-title, .advice-title {
+  font-size: 11px;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin: 0 0 16px;
+}
+.chart { display: flex; flex-direction: column; gap: 9px; }
+.bar-row {
+  display: grid;
+  grid-template-columns: 7.2em 1fr 2.4em;
+  align-items: center;
+  gap: 10px;
+  font-size: 12.5px;
+}
+.bar-name { color: var(--ink); letter-spacing: 0.02em; }
+.bar-track {
+  position: relative;
+  height: 12px;
+  background: var(--dai-soft);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.bar-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 0%;
+  background: var(--dai);
+  border-radius: 3px;
+  transition: width 0.7s ease;
+}
+.bar-row.hot .bar-fill { background: var(--zhusha); }
+.bar-val {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-soft);
+}
+.bar-row.hot .bar-val { color: var(--zhusha); font-weight: 600; }
+.chart-legend {
+  margin-top: 12px;
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+
+.advice { display: flex; flex-direction: column; gap: 14px; }
+.advice-item {
+  display: grid;
+  grid-template-columns: 5.6em 1fr;
+  gap: 12px;
+  font-size: 14.5px;
+}
+.advice-item .k {
+  color: var(--zhusha);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+.advice-item .v { color: var(--ink); }
+
+.disclaimer {
+  font-size: 12px;
+  color: var(--ink-soft);
+  margin: 22px 4px 0;
+  line-height: 1.7;
+}
+
+.result-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.footer-mark {
+  text-align: center;
+  margin-top: 40px;
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+@media (max-width: 400px) {
+  .cover-title { font-size: 34px; }
+  .q-text { font-size: 20px; }
+  .main-type { font-size: 27px; }
+  .bar-row { grid-template-columns: 6.6em 1fr 2.2em; font-size: 11.5px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bar-fill, #progressBar, .opt, .gender-btn { transition: none; }
+}
+</style>
+<meta name="description" content="The official 60-question TCM self-test: find out which of the nine body constitutions you are, with diet and lifestyle advice. About 5 minutes.">
+<meta property="og:title" content="TCM Constitution Test · The Nine Constitutions">
+<meta property="og:description" content="The official 60-question TCM self-test: find out which of the nine body constitutions you are, with diet and lifestyle advice. About 5 minutes.">
+<meta property="og:type" content="website">
+</head>
+<body>
+<div id="progressTrack"><div id="progressBar"></div></div>
+
+<div class="wrap">
+
+  <!-- cover -->
+  <section class="screen active cover" id="screen-cover">
+    <div class="cover-head">
+      <div>
+        <p class="cover-eyebrow">Traditional Chinese Medicine</p>
+        <h1 class="cover-title serif">Which of the nine constitutions are you?</h1>
+        <p class="cover-sub">The official 60-question self-test · about 5 minutes</p>
+      </div>
+      <div class="cover-zh-col">
+        <div class="zh-strip zh">九种体质自测</div>
+        <div class="cover-seal zh"><span>知</span><span>己</span><span>养</span><span>身</span></div>
+      </div>
+    </div>
+    <p class="cover-note">
+      TCM classifies body constitution into nine types: <b>Balanced, Qi-Deficient, Yang-Deficient, Yin-Deficient,
+      Phlegm-Damp, Damp-Heat, Blood-Stasis, Qi-Stagnant</b> and <b>Allergy-Prone</b>.
+      This test uses the standard <i>Classification and Determination of Constitution in TCM</i> questionnaire.
+      Answer according to how you have felt over the <b>past year</b> — you'll get your constitution report with
+      diet, lifestyle and exercise advice.
+    </p>
+    <div class="gender-row" role="group" aria-label="Select your sex">
+      <span class="gender-label">Sex</span>
+      <button class="gender-btn" id="btn-male" aria-pressed="false">Male</button>
+      <button class="gender-btn" id="btn-female" aria-pressed="false">Female</button>
+      <p class="gender-hint">One question in the standard questionnaire differs by sex.</p>
+    </div>
+    <button class="btn serif" id="btn-start" disabled>Start the test</button>
+    <a class="lang-link" href="./">中文版 →</a>
+  </section>
+
+  <!-- quiz -->
+  <section class="screen quiz" id="screen-quiz">
+    <div class="quiz-meta">
+      <button class="back-link" id="btn-back">‹ Previous</button>
+      <span id="q-counter">1 / 60</span>
+    </div>
+    <h2 class="q-text serif" id="q-text"></h2>
+    <p class="q-hint">Answer based on how you've felt over the past year</p>
+    <div class="opts" id="opts"></div>
+  </section>
+
+  <!-- result -->
+  <section class="screen result" id="screen-result">
+    <div class="report-card" id="report-card">
+      <p class="report-eyebrow serif">TCM Constitution Report</p>
+      <div class="report-head">
+        <div>
+          <h2 class="main-type serif" id="main-type"></h2>
+          <p class="main-zh zh" id="main-zh"></p>
+          <span class="main-level" id="main-level"></span>
+        </div>
+        <div class="seal zh" id="seal"></div>
+      </div>
+      <p class="type-desc" id="type-desc"></p>
+      <div class="also-row" id="also-row" hidden></div>
+
+      <hr class="divider">
+      <p class="chart-title serif">Your nine constitution scores</p>
+      <div class="chart" id="chart"></div>
+      <p class="chart-legend">Score 0–100 · ≥40 confirms the type · 30–39 indicates a tendency.</p>
+
+      <hr class="divider">
+      <p class="advice-title serif">How to care for it</p>
+      <div class="advice" id="advice"></div>
+
+      <p class="disclaimer">
+        Scored per the national standard <i>Classification and Determination of Constitution in TCM</i>
+        (ZYYXH/T 157—2009). For general wellness reference only — this is not a medical diagnosis or
+        treatment advice. If you have health concerns, please consult a qualified practitioner.
+      </p>
+    </div>
+
+    <div class="result-actions">
+      <button class="btn serif" id="btn-copy">Copy results</button>
+      <button class="btn ghost serif" id="btn-restart">Retake the test</button>
+    </div>
+    <p class="footer-mark serif">Know yourself · Nourish accordingly</p>
+  </section>
+
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  /* scales: constitution types this question counts toward; rev = reverse-scored (Balanced scale only) */
+  var SCALES = {
+    pinghe: { name: "Balanced",      zh: "平和质", n: 8 },
+    qixu:   { name: "Qi-Deficient",  zh: "气虚质", n: 8 },
+    yangxu: { name: "Yang-Deficient", zh: "阳虚质", n: 7 },
+    yinxu:  { name: "Yin-Deficient", zh: "阴虚质", n: 8 },
+    tanshi: { name: "Phlegm-Damp",   zh: "痰湿质", n: 8 },
+    shire:  { name: "Damp-Heat",     zh: "湿热质", n: 6 },
+    xueyu:  { name: "Blood-Stasis",  zh: "血瘀质", n: 7 },
+    qiyu:   { name: "Qi-Stagnant",   zh: "气郁质", n: 7 },
+    tebing: { name: "Allergy-Prone", zh: "特禀质", n: 7 }
+  };
+  var SCALE_ORDER = ["pinghe", "qixu", "yangxu", "yinxu", "tanshi", "shire", "xueyu", "qiyu", "tebing"];
+
+  var QUESTIONS = [
+    { t: "Do you feel full of energy?", s: [["pinghe", false]] },
+    { t: "Do you get tired easily?", s: [["pinghe", true], ["qixu", false]] },
+    { t: "Are your hands and feet cold?", s: [["yangxu", false]] },
+    { t: "Do you have a dry mouth or throat, always wanting to drink water?", s: [["yinxu", false]] },
+    { t: "Does your body feel heavy or sluggish?", s: [["tanshi", false]] },
+    { t: "Do you often feel tense, stressed or anxious?", s: [["qiyu", false]] },
+    { t: "Is your face or nose oily or shiny?", s: [["shire", false]] },
+    { t: "Do you get dark circles under your eyes easily?", s: [["xueyu", false]] },
+    { t: "Are you prone to allergies (to medicines, foods, smells, pollen, or weather and season changes)?", s: [["tebing", false]] },
+    { t: "Do you have trouble sleeping?", s: [["pinghe", true]] },
+    { t: "Do you get short of breath easily?", s: [["qixu", false]] },
+    { t: "Do your stomach area, back, lower back or knees feel cold?", s: [["yangxu", false]] },
+    { t: "Do your palms and soles feel hot?", s: [["yinxu", false]] },
+    { t: "Is your forehead oily?", s: [["tanshi", false]] },
+    { t: "Are you sentimental or emotionally fragile?", s: [["qiyu", false]] },
+    { t: "Do you have a bitter taste or an unpleasant odor in your mouth?", s: [["shire", false]] },
+    { t: "Is your complexion dull, or do you develop dark patches on your face easily?", s: [["xueyu", false]] },
+    { t: "Do you sneeze even when you don't have a cold?", s: [["tebing", false]] },
+    { t: "Do you feel down, low or unhappy?", s: [["pinghe", true], ["qiyu", false]] },
+    { t: "Do you get heart palpitations easily?", s: [["qixu", false]] },
+    { t: "Do you feel the cold more than others and wear more clothes than they do?", s: [["yangxu", false]] },
+    { t: "Are your skin or lips dry?", s: [["yinxu", false]] },
+    { t: "Do you feel tightness in your chest or bloating in your abdomen?", s: [["tanshi", false]] },
+    { t: "Do you get frightened or startled easily?", s: [["qiyu", false]] },
+    { t: "Do you get acne or skin sores easily?", s: [["shire", false]] },
+    { t: "Do unexplained bruises appear on your skin?", s: [["xueyu", false]] },
+    { t: "Do you get a stuffy or runny nose even when you don't have a cold?", s: [["tebing", false]] },
+    { t: "Is your voice weak and low?", s: [["pinghe", true], ["qixu", false]] },
+    { t: "Do you get dizzy easily, or feel lightheaded when you stand up?", s: [["qixu", false]] },
+    { t: "Do cold foods or drinks disagree with you, or do you avoid them?", s: [["yangxu", false]] },
+    { t: "Are your cheekbones flushed or reddish?", s: [["yinxu", false]] },
+    { t: "Is your abdomen full, soft and flabby?", s: [["tanshi", false]] },
+    { t: "Do you sigh for no particular reason?", s: [["qiyu", false]] },
+    { t: "Are your stools sticky, with a feeling that your bowels never empty completely?", s: [["shire", false]] },
+    { t: "Do you have fine red capillary threads on your cheeks?", s: [["xueyu", false]] },
+    { t: "Do you cough or wheeze when seasons change, temperature shifts, or you smell something unusual?", s: [["tebing", false]] },
+    { t: "Do you tolerate cold worse than most people (winter cold, or air-conditioning and fans in summer)?", s: [["pinghe", true], ["yangxu", false]] },
+    { t: "Do you catch colds more easily than others?", s: [["qixu", false], ["yangxu", false]] },
+    { t: "Do you feel heat in your body or face?", s: [["yinxu", false]] },
+    { t: "Does the inside of your mouth feel sticky?", s: [["tanshi", false]] },
+    { t: "Do you feel distending pain in your sides (ribs) or breasts?", s: [["qiyu", false]] },
+    { t: "Do you feel a burning sensation when urinating, or is your urine dark in color?", s: [["shire", false]] },
+    { t: "Do you have pain anywhere in your body?", s: [["xueyu", false]] },
+    { t: "Does your skin break out in hives (welts) easily?", s: [["tebing", false]] },
+    { t: "Do you adapt well to changes in your natural and social environment?", s: [["pinghe", false]] },
+    { t: "Do you prefer quiet and feel too listless to talk?", s: [["qixu", false]] },
+    { t: "Do you get diarrhea after being chilled or having cold food or drinks?", s: [["yangxu", false]] },
+    { t: "Are your lips redder than most people's?", s: [["yinxu", false]] },
+    { t: "Do you have a lot of phlegm, especially a feeling of phlegm stuck in your throat?", s: [["tanshi", false]] },
+    { t: "Do you feel a lump in your throat that you can neither cough up nor swallow?", s: [["qiyu", false]] },
+    { t: "", s: [["shire", false]], gendered: true,
+      male: "Is your scrotum damp or clammy?",
+      female: "Is your vaginal discharge yellowish in color?" },
+    { t: "Are your lips dark or dusky in color?", s: [["xueyu", false]] },
+    { t: "Has your skin ever shown purpura (purple-red spots or patches) from an allergy?", s: [["tebing", false]] },
+    { t: "Are you forgetful?", s: [["pinghe", true], ["xueyu", false]] },
+    { t: "Do you break into a sweat easily with only slight activity?", s: [["qixu", false]] },
+    { t: "Are you prone to constipation or dry stools?", s: [["yinxu", false]] },
+    { t: "Are your upper eyelids puffy or slightly swollen compared with other people's?", s: [["tanshi", false]] },
+    { t: "Do your eyes feel dry?", s: [["yinxu", false]] },
+    { t: "Is your tongue coating thick and greasy, or does your tongue feel coated?", s: [["tanshi", false]] },
+    { t: "Does your skin turn red and show marks when you scratch it?", s: [["tebing", false]] }
+  ];
+
+  var OPTIONS = [
+    { v: 1, label: "Never",     hint: "not at all" },
+    { v: 2, label: "Rarely",    hint: "a little / occasionally" },
+    { v: 3, label: "Sometimes", hint: "some of the time" },
+    { v: 4, label: "Often",     hint: "most of the time" },
+    { v: 5, label: "Always",    hint: "very much / every day" }
+  ];
+
+  var TYPE_INFO = {
+    pinghe: {
+      desc: "Yin, yang, qi and blood are in harmony. You have good energy, sleep and appetite, and adapt well to change — the ideal constitution.",
+      advice: [
+        ["Diet", "Eat regular, balanced meals with plenty of variety. No special supplements needed — avoid over-tonifying."],
+        ["Daily life", "Keep your steady routine: regular sleep, balance of work and rest."],
+        ["Exercise", "Maintain moderate regular exercise — brisk walking, jogging, swimming — to stay balanced."],
+        ["Mind", "Stay optimistic and keep doing what you're doing."]
+      ]
+    },
+    qixu: {
+      desc: "Vital qi is insufficient: you tire easily, get short of breath, sweat with little exertion, speak softly and catch colds more easily than others.",
+      advice: [
+        ["Diet", "Favor qi-nourishing foods: Chinese yam, red dates, millet, lotus seeds, chicken. Go easy on raw and cold foods."],
+        ["Daily life", "Avoid overwork and late nights; a short midday nap helps. Keep warm to prevent colds."],
+        ["Exercise", "Gentle, steady movement — walking, tai chi, baduanjin (qigong). Avoid workouts that leave you drenched in sweat."],
+        ["Mind", "Rest your mind; avoid excessive worry, which drains qi."]
+      ]
+    },
+    yangxu: {
+      desc: "Yang (warming) energy is insufficient: you feel the cold, have cold hands and feet, prefer warm food and drinks, and cold things upset your stomach.",
+      advice: [
+        ["Diet", "Favor warming foods: lamb, ginger, longan, chives. Limit raw, cold and iced foods and drinks (including watermelon and cold salads)."],
+        ["Daily life", "Keep warm — especially your lower back, abdomen and feet. Don't overdo air-conditioning in summer."],
+        ["Exercise", "Get sunlight and move regularly — movement generates yang. Moxibustion at Guanyuan (CV4) and Zusanli (ST36) can help."],
+        ["Mind", "Stay socially connected and keep your spirits warm and steady."]
+      ]
+    },
+    yinxu: {
+      desc: "Yin fluids are depleted: dry mouth and throat, warm palms and soles, dry eyes, a tendency to constipation and restless sleep.",
+      advice: [
+        ["Diet", "Favor yin-nourishing foods: white fungus, lily bulb, pear, duck, goji berries, honey. Limit spicy, fried and grilled foods."],
+        ["Daily life", "Going to bed early is the best way to nourish yin. Avoid late nights and heavy sweating in hot environments."],
+        ["Exercise", "Low-to-moderate intensity: tai chi, yoga, walking. Avoid exercise that makes you sweat heavily."],
+        ["Mind", "Cultivate calm — meditation and slow breathing help settle inner heat and restlessness."]
+      ]
+    },
+    tanshi: {
+      desc: "Phlegm and dampness accumulate: a fuller body with a soft abdomen, heaviness and sluggishness, an oily face and a thick, greasy tongue coating.",
+      advice: [
+        ["Diet", "Eat light: job's tears (coix), adzuki beans, winter melon, hawthorn, lotus leaf tea. Cut down on sweets, greasy food and cold drinks."],
+        ["Daily life", "Avoid damp environments; wear breathable clothing; don't sit or lie around for long stretches."],
+        ["Exercise", "This constitution needs consistent training — build up aerobic exercise gradually and get a good sweat going."],
+        ["Mind", "Stay active and engaged; resist lethargy and oversleeping."]
+      ]
+    },
+    shire: {
+      desc: "Dampness and heat are trapped inside: oily skin prone to acne, a bitter taste in the mouth, sticky stools and dark, hot urine.",
+      advice: [
+        ["Diet", "Favor cooling, draining foods: mung beans, bitter melon, celery, adzuki beans, green tea. Avoid spicy, fried and sweet foods; strictly limit alcohol."],
+        ["Daily life", "No late nights. Avoid hot, humid environments; keep skin clean and bowels regular."],
+        ["Exercise", "Higher-intensity exercise suits you — running, ball sports, swimming — sweating helps vent heat and damp."],
+        ["Mind", "Keep a cool head; irritability feeds the heat."]
+      ]
+    },
+    xueyu: {
+      desc: "Blood circulation is sluggish: a dull complexion, dark lips, easy bruising, dark under-eye circles, and pain that stays in one fixed spot.",
+      advice: [
+        ["Diet", "Favor blood-moving foods: hawthorn, black fungus (wood ear), rose tea, and a small amount of red or rice wine. Cut down on rich, greasy food."],
+        ["Daily life", "Keep a regular routine, avoid long periods of sitting, and keep warm — warmth helps blood flow."],
+        ["Exercise", "Choose exercise that gets blood moving: brisk walking, dancing, tai chi."],
+        ["Mind", "Stay cheerful — in TCM, when qi flows freely, blood follows."]
+      ]
+    },
+    qiyu: {
+      desc: "Qi flow is stagnant: low mood, tension and anxiety, sentimentality, frequent sighing, and a feeling of something stuck in the throat.",
+      advice: [
+        ["Diet", "Favor qi-moving foods and teas: rose tea, dried tangerine peel, bergamot (fo shou), radish, citrus. Eat fewer sour, astringent foods."],
+        ["Daily life", "Get outdoors, get sunlight, and spend time with friends — don't stew alone indoors."],
+        ["Exercise", "Vigorous exercise is a great outlet: running, hiking, ball sports."],
+        ["Mind", "Redirect and release — music, travel, talking things out. If low mood persists, please seek professional support."]
+      ]
+    },
+    tebing: {
+      desc: "An inborn sensitivity, most often an allergic constitution: sneezing and hives come easily, with reactions to medicines, foods, pollen or weather changes.",
+      advice: [
+        ["Diet", "Eat light and balanced. Limit common triggers — shellfish, alcohol, very spicy food — and learn your personal allergens."],
+        ["Daily life", "Avoid known allergens; air and wash bedding often; take extra care when seasons change."],
+        ["Exercise", "Moderate exercise builds resilience — but avoid training in pollen-heavy or cold, windy environments."],
+        ["Mind", "Stay calm during flare-ups and deal with them promptly."]
+      ]
+    }
+  };
+
+  /* ---------- state ---------- */
+  var gender = null;
+  var current = 0;
+  var answers = new Array(QUESTIONS.length).fill(0);
+
+  var screens = {
+    cover: document.getElementById("screen-cover"),
+    quiz: document.getElementById("screen-quiz"),
+    result: document.getElementById("screen-result")
+  };
+  var progressBar = document.getElementById("progressBar");
+  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  function show(name) {
+    for (var k in screens) screens[k].classList.toggle("active", k === name);
+    window.scrollTo(0, 0);
+  }
+
+  /* ---------- cover ---------- */
+  var btnMale = document.getElementById("btn-male");
+  var btnFemale = document.getElementById("btn-female");
+  var btnStart = document.getElementById("btn-start");
+
+  function pickGender(g) {
+    gender = g;
+    btnMale.setAttribute("aria-pressed", g === "male" ? "true" : "false");
+    btnFemale.setAttribute("aria-pressed", g === "female" ? "true" : "false");
+    btnStart.disabled = false;
+  }
+  btnMale.addEventListener("click", function () { pickGender("male"); });
+  btnFemale.addEventListener("click", function () { pickGender("female"); });
+  btnStart.addEventListener("click", function () {
+    current = 0;
+    show("quiz");
+    renderQuestion();
+  });
+
+  /* ---------- quiz ---------- */
+  var qText = document.getElementById("q-text");
+  var qCounter = document.getElementById("q-counter");
+  var optsBox = document.getElementById("opts");
+  var btnBack = document.getElementById("btn-back");
+
+  function questionText(q) {
+    if (q.gendered) return gender === "male" ? q.male : q.female;
+    return q.t;
+  }
+
+  function renderQuestion() {
+    var q = QUESTIONS[current];
+    qText.textContent = questionText(q);
+    qCounter.textContent = (current + 1) + " / " + QUESTIONS.length;
+    btnBack.disabled = current === 0;
+    progressBar.style.width = (current / QUESTIONS.length * 100) + "%";
+
+    optsBox.innerHTML = "";
+    OPTIONS.forEach(function (opt) {
+      var b = document.createElement("button");
+      b.className = "opt" + (answers[current] === opt.v ? " picked" : "");
+      b.innerHTML = "<span>" + opt.label + "</span><small>" + opt.hint + "</small>";
+      b.addEventListener("click", function () { pickAnswer(opt.v, b); });
+      optsBox.appendChild(b);
+    });
+  }
+
+  var advancing = false;
+  function pickAnswer(v, btn) {
+    if (advancing) return;
+    answers[current] = v;
+    Array.prototype.forEach.call(optsBox.children, function (c) { c.classList.remove("picked"); });
+    btn.classList.add("picked");
+    advancing = true;
+    setTimeout(function () {
+      advancing = false;
+      if (current < QUESTIONS.length - 1) {
+        current++;
+        renderQuestion();
+      } else {
+        showResult();
+      }
+    }, reduceMotion ? 0 : 180);
+  }
+
+  btnBack.addEventListener("click", function () {
+    if (current > 0) { current--; renderQuestion(); }
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (!screens.quiz.classList.contains("active")) return;
+    var n = parseInt(e.key, 10);
+    if (n >= 1 && n <= 5) {
+      var btn = optsBox.children[n - 1];
+      if (btn) pickAnswer(n, btn);
+    }
+  });
+
+  /* ---------- scoring ---------- */
+  function computeScores() {
+    var raw = {}, scores = {};
+    SCALE_ORDER.forEach(function (k) { raw[k] = 0; });
+    QUESTIONS.forEach(function (q, i) {
+      var a = answers[i];
+      q.s.forEach(function (pair) {
+        var key = pair[0], rev = pair[1];
+        raw[key] += rev ? (6 - a) : a;
+      });
+    });
+    SCALE_ORDER.forEach(function (k) {
+      var n = SCALES[k].n;
+      scores[k] = Math.round((raw[k] - n) / (n * 4) * 100 * 10) / 10;
+    });
+    return scores;
+  }
+
+  function judge(scores) {
+    var biased = SCALE_ORDER.filter(function (k) { return k !== "pinghe"; });
+    var yes = biased.filter(function (k) { return scores[k] >= 40; })
+      .sort(function (a, b) { return scores[b] - scores[a]; });
+    var tend = biased.filter(function (k) { return scores[k] >= 30 && scores[k] < 40; })
+      .sort(function (a, b) { return scores[b] - scores[a]; });
+
+    var maxBiased = 0;
+    biased.forEach(function (k) { if (scores[k] > maxBiased) maxBiased = scores[k]; });
+
+    if (scores.pinghe >= 60 && maxBiased < 30) {
+      return { main: "pinghe", level: "Confirmed · Balanced", yes: [], tend: tend };
+    }
+    if (scores.pinghe >= 60 && maxBiased < 40) {
+      return { main: "pinghe", level: "Mostly balanced", yes: [], tend: tend };
+    }
+    if (yes.length > 0) {
+      return { main: yes[0], level: "Confirmed", yes: yes.slice(1), tend: tend };
+    }
+    if (tend.length > 0) {
+      return { main: tend[0], level: "Tendency", yes: [], tend: tend.slice(1) };
+    }
+    return { main: "pinghe", level: "Overall balanced", yes: [], tend: [] };
+  }
+
+  /* ---------- result ---------- */
+  var lastScores = null, lastJudge = null;
+
+  function showResult() {
+    progressBar.style.width = "100%";
+    var scores = computeScores();
+    var j = judge(scores);
+    lastScores = scores;
+    lastJudge = j;
+
+    var main = SCALES[j.main];
+    document.getElementById("main-type").textContent = main.name;
+    document.getElementById("main-zh").textContent = main.zh;
+    document.getElementById("main-level").textContent = j.level;
+    document.getElementById("type-desc").textContent = TYPE_INFO[j.main].desc;
+
+    var seal = document.getElementById("seal");
+    seal.innerHTML = "";
+    var sealChars = [main.zh[0], main.zh[1], "之", "质"];
+    sealChars.forEach(function (ch) {
+      var s = document.createElement("span");
+      s.textContent = ch;
+      seal.appendChild(s);
+    });
+
+    var alsoRow = document.getElementById("also-row");
+    var extras = [];
+    j.yes.forEach(function (k) { extras.push(SCALES[k].name + " (confirmed)"); });
+    j.tend.forEach(function (k) { extras.push(SCALES[k].name + " (tendency)"); });
+    if (extras.length) {
+      alsoRow.hidden = false;
+      alsoRow.innerHTML = "Also present: " + extras.map(function (t) {
+        return '<span class="tag">' + t + "</span>";
+      }).join("");
+    } else {
+      alsoRow.hidden = true;
+    }
+
+    var chart = document.getElementById("chart");
+    chart.innerHTML = "";
+    SCALE_ORDER.forEach(function (k) {
+      var row = document.createElement("div");
+      row.className = "bar-row" + (k === j.main ? " hot" : "");
+      row.innerHTML =
+        '<span class="bar-name">' + SCALES[k].name + "</span>" +
+        '<div class="bar-track"><div class="bar-fill"></div></div>' +
+        '<span class="bar-val">' + scores[k].toFixed(0) + "</span>";
+      chart.appendChild(row);
+      var fill = row.querySelector(".bar-fill");
+      var w = Math.max(0, Math.min(100, scores[k])) + "%";
+      if (reduceMotion) { fill.style.width = w; }
+      else { setTimeout(function () { fill.style.width = w; }, 60); }
+    });
+
+    var advice = document.getElementById("advice");
+    advice.innerHTML = "";
+    TYPE_INFO[j.main].advice.forEach(function (pair) {
+      var item = document.createElement("div");
+      item.className = "advice-item";
+      item.innerHTML = '<span class="k serif">' + pair[0] + '</span><span class="v">' + pair[1] + "</span>";
+      advice.appendChild(item);
+    });
+
+    show("result");
+  }
+
+  /* ---------- result actions ---------- */
+  document.getElementById("btn-copy").addEventListener("click", function () {
+    if (!lastScores || !lastJudge) return;
+    var lines = ["My TCM constitution test results"];
+    lines.push("Main constitution: " + SCALES[lastJudge.main].name + " " + SCALES[lastJudge.main].zh + " (" + lastJudge.level + ")");
+    var extras = [];
+    lastJudge.yes.forEach(function (k) { extras.push(SCALES[k].name + " (confirmed)"); });
+    lastJudge.tend.forEach(function (k) { extras.push(SCALES[k].name + " (tendency)"); });
+    if (extras.length) lines.push("Also present: " + extras.join(", "));
+    lines.push("Scores:");
+    SCALE_ORDER.forEach(function (k) {
+      lines.push("  " + SCALES[k].name + " " + lastScores[k].toFixed(0));
+    });
+    var text = lines.join("\n");
+    var btn = this;
+    function done() {
+      btn.textContent = "Copied ✓";
+      setTimeout(function () { btn.textContent = "Copy results"; }, 1600);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, function () { fallbackCopy(text); done(); });
+    } else {
+      fallbackCopy(text);
+      done();
+    }
+  });
+
+  function fallbackCopy(text) {
+    var ta = document.createElement("textarea");
+    ta.value = text;
+    ta.style.position = "fixed";
+    ta.style.opacity = "0";
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand("copy"); } catch (e) {}
+    document.body.removeChild(ta);
+  }
+
+  document.getElementById("btn-restart").addEventListener("click", function () {
+    answers = new Array(QUESTIONS.length).fill(0);
+    current = 0;
+    progressBar.style.width = "0%";
+    show("cover");
+  });
+})();
+</script>
+</body>
+</html>
