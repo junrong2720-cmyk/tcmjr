@@ -464,6 +464,38 @@ html, body {
   margin-top: 24px;
 }
 
+.sites {
+  margin-top: 28px;
+  display: grid;
+  gap: 10px;
+}
+.sites-h {
+  text-align: center;
+  font-size: 13px;
+  letter-spacing: 0.2em;
+  color: var(--ink-soft);
+}
+.sites a {
+  display: block;
+  padding: 12px 16px;
+  background: var(--card);
+  border: 1px solid var(--hairline);
+  border-left: 3px solid var(--zhusha);
+  border-radius: 10px;
+  color: var(--ink);
+  text-decoration: none;
+}
+.sites a:hover { border-color: var(--dai); }
+.sites b { display: block; font-size: 15px; }
+.sites span { font-size: 12.5px; color: var(--ink-soft); }
+.cover-sites {
+  align-self: flex-start;
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+.cover-sites a { color: var(--ink-soft); text-decoration: none; border-bottom: 1px solid var(--hairline); }
+.cover-sites a:hover { color: var(--dai); border-color: var(--dai); }
+
 .footer-mark {
   text-align: center;
   margin-top: 40px;
@@ -521,6 +553,7 @@ html, body {
     </div>
     <button class="btn serif" id="btn-start" disabled>Start the test</button>
     <a class="lang-link" href="./">中文版 →</a>
+    <p class="cover-sites">Sister sites: <a href="https://junrong2720-cmyk.github.io/learn/?lang=en" target="_blank" rel="noopener">Chinese Medicine Explained</a> · <a href="https://junrong2720-cmyk.github.io/acu/?lang=en" target="_blank" rel="noopener">Acupoint Library</a></p>
   </section>
 
   <!-- quiz -->
@@ -568,6 +601,11 @@ html, body {
     <div class="result-actions">
       <button class="btn serif" id="btn-copy">Copy results</button>
       <button class="btn ghost serif" id="btn-restart">Retake the test</button>
+    </div>
+    <div class="sites">
+      <p class="sites-h serif">Want to learn more?</p>
+      <a href="https://junrong2720-cmyk.github.io/learn/?lang=en" target="_blank" rel="noopener"><b class="serif">Chinese Medicine Explained</b><span>From yin-yang to 417 herbs and 162 formulas: the ideas behind your constitution</span></a>
+      <a href="https://junrong2720-cmyk.github.io/acu/?lang=en" target="_blank" rel="noopener"><b class="serif">Acupoint Library</b><span>362 points of the 14 meridians, with body maps and quizzes</span></a>
     </div>
     <p class="footer-mark serif">Know yourself · Nourish accordingly</p>
   </section>
